@@ -6,3 +6,7 @@
 config.mak
 lib/musl-gcc.specs
 /obj/
+demo/*
+Session.vim
+out386/
+tags
