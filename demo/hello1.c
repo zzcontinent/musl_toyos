@@ -13,27 +13,24 @@ const char * test_str = "===> hello world!\r\n";
 
 int main()
 {
-	int loop_cnt = 100;
 	int ret = 0;
-	while(loop_cnt--) {
 #ifdef USING_MUSL
-		printf("musl %s", test_str);
-		//printf("musl!\n");
+	printf("musl %s", test_str);
+	//printf("musl!\n");
 #else
-		asm volatile (
-				"int %1"
-				: "=a" (ret)
-				: "i" (0x80),
-				"a" (__NR_write),
-				"b" (1),
-				"c" (test_str),
-				"d" (strlen(test_str)),
-				"S" (4),
-				"D" (5)
-				: "cc", "memory");
+	asm volatile (
+			"int %1"
+			: "=a" (ret)
+			: "i" (0x80),
+			"a" (__NR_write),
+			"b" (1),
+			"c" (test_str),
+			"d" (strlen(test_str)),
+			"S" (4),
+			"D" (5)
+			: "cc", "memory");
 #endif
-	}
-	//exit(0xbeaf);
+	exit(0);
 
 	return ret;
 }
